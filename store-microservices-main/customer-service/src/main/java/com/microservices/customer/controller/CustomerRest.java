@@ -56,12 +56,14 @@ public class CustomerRest {
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<Customer> getCustomer(@PathVariable("id") long id) {
+    	System.out.println("Holaaaaa!!!!!!!!!!!!!!");
         log.info("Fetching Customer with id {}", id);
         Customer customer = customerService.getCustomer(id);
         if (  null == customer) {
             log.error("Customer with id {} not found.", id);
             return  ResponseEntity.notFound().build();
         }
+    	System.out.println("este es el costumer: "+customer);
         return  ResponseEntity.ok(customer);
     }
 
