@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.microservices.shopping.model.*;;
+import com.microservices.shopping.model.*;
 
 @FeignClient(name = "customer-service", fallback= CustomerHystrixFallbackFactory.class)
 public interface CustomerClient {
