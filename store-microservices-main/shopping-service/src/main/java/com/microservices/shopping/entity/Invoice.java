@@ -34,8 +34,6 @@ public class Invoice {
     @Temporal(TemporalType.DATE)
     private Date createAt;
 
-
-
     @Valid
     @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
