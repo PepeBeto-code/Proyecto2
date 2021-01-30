@@ -35,7 +35,7 @@ public class PaymentController {
 	PaymentService paymentService;
 	
 	 @GetMapping(value = "/{id}")
-	    public ResponseEntity<Card> getProduct(@PathVariable("id") Long id) {
+	    public ResponseEntity<Card> getCard(@PathVariable("id") Long id) {
 	        Card card =  paymentService.getCard(id);
 	        if (null==card){
 	            return ResponseEntity.notFound().build();
@@ -44,7 +44,7 @@ public class PaymentController {
 	    }
 	 
 	   @GetMapping
-	    public ResponseEntity<List<Card>> listProduct(@RequestParam(name = "customerId", required = false) Long customerId){
+	    public ResponseEntity<List<Card>> listCard(@RequestParam(name = "customerId", required = false) Long customerId){
 	        List<Card> cards = new ArrayList<>();
 	        if (null ==  customerId){
 	        	cards = paymentService.listAllProduct();
@@ -63,7 +63,7 @@ public class PaymentController {
      }
 	   
 	   @PostMapping
-	    public ResponseEntity<Card> createProduct(@Valid @RequestBody Card card, BindingResult result){
+	    public ResponseEntity<Card> createCard(@Valid @RequestBody Card card, BindingResult result){
 	        if (result.hasErrors()){
 	            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, this.formatMessage(result));
 	        }
@@ -72,7 +72,7 @@ public class PaymentController {
 	    }
 	   
 	    @DeleteMapping(value = "/{id}")
-	    public ResponseEntity<String> deleteProduct(@PathVariable("id") Long id){
+	    public ResponseEntity<String> deleteCard(@PathVariable("id") Long id){
 	        paymentService.deleteCard(id);
 	        return new ResponseEntity<>("Se a eliminado exitosamente",HttpStatus.OK);
 	    }
