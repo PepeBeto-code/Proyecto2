@@ -9,7 +9,7 @@ public interface PaymentService {
 	
 	   // public List<Card> findCustomerAll();
 	public Card createCard(Card customer);
-	   // public Card updateCustomer(Card customer);
+    public Card updateCard(Card card);
     public void deleteCard(Long customer);
 	public ArrayList<Card> findByCustomer(Long idCustomer);
 	public ArrayList<Card> listAllProduct();

@@ -1,21 +1,12 @@
-# Application Configuration
-server:
-  port: 8094
-
-# Spring
 spring:
-  datasource:
-    driverClassName: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/payment_service?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=GMT
-    username: ${MYSQL_USER}
-    password: ${MYSQL_PASSWORD}
-  jpa:
-    hibernate.ddl-auto: update
-    generate-ddl: true
-    show-sql: true
-
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: http://localhost:8099/eureka/
-
+  application:
+    name: payment-service
+  cloud:
+    config:
+      uri: http://localhost:8081
+      username: root
+      password: s3cr3t
+  boot:
+    admin:
+      client:
+        url: http://localhost:8086

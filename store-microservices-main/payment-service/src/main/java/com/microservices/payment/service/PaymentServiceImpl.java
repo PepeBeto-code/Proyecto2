@@ -34,6 +34,18 @@ public class PaymentServiceImpl implements PaymentService{
         this.cardRepository.deleteById(customer);
     }
     
+    @Override
+    public Card updateCard(Card card) {
+    	Card cardDB =  cardRepository.findById(card.getId()).orElse(null);
+    	System.out.println("es es el card: "+cardDB);
+        if (cardDB == null){
+            return  null;
+        }
+        cardDB.setNumber(card.getNumber());
+        cardDB.setExp_date(card.getExp_date());
+        return cardRepository.save(cardDB);
+    }
+    
 	public Card createCard(Card card) {
 		Card cardDB = cardRepository.findById (card.getId()).orElse(null);
 	        if (cardDB != null){

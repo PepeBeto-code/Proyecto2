@@ -11,11 +11,13 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -26,13 +28,19 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.microservices.payment.entity.Card;
 import com.microservices.payment.service.PaymentService;
+
+import lombok.extern.slf4j.Slf4j;
+
 import com.microservices.payment.controller.ErrorMessage;
 
+@Slf4j
 @RestController
 @RequestMapping("/payments")
 public class PaymentController {
 	@Autowired
 	PaymentService paymentService;
+	@Autowired
+	PasswordEncoder passwordEncoder;
 	
 	 @GetMapping(value = "/{id}")
 	    public ResponseEntity<Card> getCard(@PathVariable("id") Long id) {
@@ -41,6 +49,15 @@ public class PaymentController {
 	            return ResponseEntity.notFound().build();
 	        }
 	        return ResponseEntity.ok(card);
+	    }
+	 
+	 @GetMapping(value = "valid/{idCard}/{valcvv}")
+	 public ResponseEntity<String> validarCVV(@PathVariable Long idCard,@PathVariable String valcvv){
+	        Card card =  paymentService.getCard(idCard);
+	        if(!(this.passwordEncoder.matches(valcvv, card.getCvv()))) {
+		        return new ResponseEntity<>("Validacion Erronea. Claves distintas",HttpStatus.BAD_REQUEST);
+	        }	     
+	        return new ResponseEntity<>("Validacion Exitosa. Claves iguales",HttpStatus.OK);
 	    }
 	 
 	   @GetMapping
@@ -69,6 +86,20 @@ public class PaymentController {
 	        }
 	        Card cardCreate =  paymentService.createCard(card);
 	        return ResponseEntity.status(HttpStatus.CREATED).body(cardCreate);
+	    }
+	   
+	   @PutMapping(value = "/{id}")
+	    public ResponseEntity<?> updateInvoice(@PathVariable("id") long id, @RequestBody Card card) {
+	        log.info("Updating Invoice with id {}", id);
+
+	        card.setId(id);
+	        Card currentCard=paymentService.updateCard(card);
+
+	        if (currentCard == null) {
+	            log.error("Unable to update. Invoice with id {} not found.", id);
+	            return  ResponseEntity.notFound().build();
+	        }
+	        return  ResponseEntity.ok(currentCard);
 	    }
 	   
 	    @DeleteMapping(value = "/{id}")
