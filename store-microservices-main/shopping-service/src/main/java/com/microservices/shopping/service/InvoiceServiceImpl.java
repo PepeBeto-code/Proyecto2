@@ -89,6 +89,7 @@ public class InvoiceServiceImpl implements InvoiceService {
         Invoice invoice= invoiceRepository.findById(id).orElse(null);
         if (null != invoice ){
             Customer customer = customerClient.getCustomer(invoice.getCustomerId()).getBody();
+        	System.out.println("este es el costumer: "+customer);
             invoice.setCustomer(customer);
             List<InvoiceItem> listItem=invoice.getItems().stream().map(invoiceItem -> {
                 Product product = productClient.getProduct(invoiceItem.getProductId()).getBody();
