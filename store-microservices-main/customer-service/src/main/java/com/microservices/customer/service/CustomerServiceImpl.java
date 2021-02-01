@@ -72,7 +72,7 @@ public class CustomerServiceImpl  implements CustomerService {
     public Customer getCustomer(Long id) {
     	Customer customer = customerRepository.findById(id).orElse(null);
     	if(null != customer) {
-    		List<Card> cards = cardClient.getCards(id).getBody();
+    		List<Card> cards = cardClient.listCard(id).getBody();
     		customer.setCards(cards);
     	}
     	return customer;

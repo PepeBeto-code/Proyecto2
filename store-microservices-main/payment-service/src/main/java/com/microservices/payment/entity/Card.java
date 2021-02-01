@@ -25,10 +25,10 @@ public class Card implements Serializable {
 	private Long id;
 	
 	@Column(name = "number")
-	private Double number;
+	private String number;
 	
 	@Column(name = "exp_date")
-	private Date exp_date;
+	private String exp_date;
 	
 	@Column(name = "cvv")
 	private String cvv;
@@ -41,4 +41,7 @@ public class Card implements Serializable {
 	
 	@Column(name = "id_customer")
 	private Long id_customer;
+	
+	@Column(name = "balance")
+	private Double balance;
 }

@@ -65,14 +65,14 @@ public class PaymentController {
 	        List<Card> cards = new ArrayList<>();
 	        if (null ==  customerId){
 	        	cards = paymentService.listAllProduct();
-	            if (cards.isEmpty()){
-	                return ResponseEntity.noContent().build();
-	            }
+//	            if (cards.isEmpty()){
+//	                return ResponseEntity.noContent().build();
+//	            }
 	        }else{
 	        	cards = paymentService.findByCustomer(customerId);
-	            if (cards.isEmpty()){
-	                return ResponseEntity.notFound().build();
-	            }
+//	            if (cards.isEmpty()){
+//	                return ResponseEntity.notFound().build();
+//	            }
 	        }
 	        
 	        return ResponseEntity.ok(cards);
