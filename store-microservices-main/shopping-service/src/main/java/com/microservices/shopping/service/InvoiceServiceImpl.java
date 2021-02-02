@@ -66,6 +66,8 @@ public class InvoiceServiceImpl implements InvoiceService {
         }
         invoiceDB.setCustomerId(invoice.getCustomerId());
         invoiceDB.setDescription(invoice.getDescription());
+        invoiceDB.setPayMethod(invoice.getPayMethod());
+        invoiceDB.setNumberCard(invoice.getNumberCard());
         invoiceDB.setNumberInvoice(invoice.getNumberInvoice());
         invoiceDB.getItems().clear();
         invoiceDB.setItems(invoice.getItems());

@@ -25,6 +25,12 @@ public class Invoice {
     @Column(name = "number_invoice")
     private String numberInvoice;
 
+    @Column(name = "pay_method")
+    private String payMethod;
+    
+    @Column(name = "number_card")
+    private Integer numberCard;
+    
     private String description;
 
     @Column(name = "customer_id")
