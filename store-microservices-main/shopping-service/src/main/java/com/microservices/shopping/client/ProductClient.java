@@ -13,19 +13,9 @@ import com.microservices.shopping.model.Product;
 @FeignClient(name = "product-service", fallback= ProductHystrixFallbackFactory.class)
 public interface ProductClient {
 
-<<<<<<< HEAD
-	@GetMapping(value = "/{id}")
-	public ResponseEntity<Product> getProduct(@PathVariable("id") Long id);
-
-	@PutMapping(value = "/{id}/stock")
-	public ResponseEntity<Product> updateStockProduct(@PathVariable("id") Long id,
-			@RequestParam(name = "quantity", required = true) Double quantity);
-}
-=======
 	@GetMapping(value = "/products/{id}")
     public ResponseEntity<Product> getProduct(@PathVariable("id") Long id);
 
 	@PutMapping (value = "/products/{id}/stock")
     public ResponseEntity<Product> updateStockProduct(@PathVariable("id")  Long id, @RequestParam(name = "quantity", required = true) Double quantity);
     }
->>>>>>> 189cc5a5c258501d5d9603b5f59dba68dfa3ace1
