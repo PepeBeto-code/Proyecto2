@@ -40,12 +40,6 @@ public class Invoice {
 	@Temporal(TemporalType.DATE)
 	private Date createAt;
 
-	@Valid
-	@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinColumn(name = "invoice_id")
-	private List<InvoiceItem> items;
-
 	private String state;
 
 
