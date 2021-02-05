@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.microservices.shopping.model.*;;
 
-@FeignClient(name = "customer-service", fallback= CustomerHystrixFallbackFactory.class)
+@FeignClient(name = "customer-service", fallback = CustomerHystrixFallbackFactory.class)
 public interface CustomerClient {
 	@GetMapping(value = "/customers/{id}")
 	public ResponseEntity<Customer> getCustomer(@PathVariable("id") long id);

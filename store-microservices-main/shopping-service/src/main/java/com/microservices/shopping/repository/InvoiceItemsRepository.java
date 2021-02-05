@@ -4,5 +4,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.microservices.shopping.entity.InvoiceItem;
 
-public interface InvoiceItemsRepository extends JpaRepository<InvoiceItem,Long> {
+public interface InvoiceItemsRepository extends JpaRepository<InvoiceItem, Long> {
 }

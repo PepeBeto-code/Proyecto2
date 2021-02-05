@@ -17,49 +17,46 @@ import java.util.List;
 @Entity
 public class Invoice {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	@Column(name = "number_invoice")
+	private String numberInvoice;
 
-    @Column(name = "number_invoice")
-    private String numberInvoice;
+	@Column(name = "pay_method")
+	private String payMethod;
 
-    @Column(name = "pay_method")
-    private String payMethod;
-    
-    @Column(name = "number_card")
-    private Integer numberCard;
-    
-    private String description;
+	@Column(name = "number_card")
+	private String numberCard;
 
-    @Column(name = "customer_id")
-    private Long customerId;
+	private String description;
 
-    @Column(name = "create_at")
-    @Temporal(TemporalType.DATE)
-    private Date createAt;
+	@Column(name = "customer_id")
+	private Long customerId;
 
+	@Column(name = "create_at")
+	@Temporal(TemporalType.DATE)
+	private Date createAt;
 
+	@Valid
+	@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name = "invoice_id")
+	private List<InvoiceItem> items;
 
-    @Valid
-    @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "invoice_id")
-    private List<InvoiceItem> items;
+	private String state;
 
-    private String state;
+	@Transient
+	private Customer customer;
 
-    @Transient
-    private Customer customer;
+	public Invoice() {
+		items = new ArrayList<>();
+	}
 
-    public Invoice(){
-        items = new ArrayList<>();
-    }
-
-    @PrePersist
-    public void prePersist() {
-        this.createAt = new Date();
-    }
+	@PrePersist
+	public void prePersist() {
+		this.createAt = new Date();
+	}
 
 }

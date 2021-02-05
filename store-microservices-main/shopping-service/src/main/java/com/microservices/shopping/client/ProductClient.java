@@ -1,6 +1,5 @@
 package com.microservices.shopping.client;
 
-
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,8 +15,9 @@ import com.microservices.shopping.model.Product;
 public interface ProductClient {
 
 	@GetMapping(value = "/{id}")
-    public ResponseEntity<Product> getProduct(@PathVariable("id") Long id);
+	public ResponseEntity<Product> getProduct(@PathVariable("id") Long id);
 
-	@PutMapping (value = "/{id}/stock")
-    public ResponseEntity<Product> updateStockProduct(@PathVariable("id")  Long id ,@RequestParam(name = "quantity", required = true) Double quantity);
-    }
+	@PutMapping(value = "/{id}/stock")
+	public ResponseEntity<Product> updateStockProduct(@PathVariable("id") Long id,
+			@RequestParam(name = "quantity", required = true) Double quantity);
+}
