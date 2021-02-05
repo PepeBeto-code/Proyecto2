@@ -35,7 +35,7 @@ public class Invoice {
 	@Column(name = "customer_id")
 	private Long customerId;
 
-<<<<<<< HEAD
+
 	@Column(name = "create_at")
 	@Temporal(TemporalType.DATE)
 	private Date createAt;
@@ -47,13 +47,14 @@ public class Invoice {
 	private List<InvoiceItem> items;
 
 	private String state;
-=======
+
+
     @Valid
     @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "invoice_id")
     private List<InvoiceItem> items;
->>>>>>> 189cc5a5c258501d5d9603b5f59dba68dfa3ace1
+
 
 	@Transient
 	private Customer customer;
