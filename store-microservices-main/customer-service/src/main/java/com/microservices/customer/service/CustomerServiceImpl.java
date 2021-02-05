@@ -5,8 +5,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.microservices.customer.repository.CustomerRepository;
+import com.microservices.customer.client.CardClient;
 import com.microservices.customer.entity.Customer;
 import com.microservices.customer.entity.Region;
+import com.microservices.customer.model.Card;
 
 import java.util.List;
 @Slf4j
@@ -15,6 +17,9 @@ public class CustomerServiceImpl  implements CustomerService {
 
     @Autowired
     CustomerRepository customerRepository;
+    
+    @Autowired
+    CardClient cardClient;
 
     @Override
     public List<Customer> findCustomerAll() {
@@ -65,6 +70,11 @@ public class CustomerServiceImpl  implements CustomerService {
 
     @Override
     public Customer getCustomer(Long id) {
-        return  customerRepository.findById(id).orElse(null);
+    	Customer customer = customerRepository.findById(id).orElse(null);
+    	if(null != customer) {
+    		List<Card> cards = cardClient.listCard(id).getBody();
+    		customer.setCards(cards);
+    	}
+    	return customer;
     }
 }

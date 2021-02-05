@@ -1,6 +1,5 @@
 package com.microservices.product.controller;
 
-import ch.qos.logback.core.pattern.util.RegularEscapeUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.microservices.product.entity.Category;
