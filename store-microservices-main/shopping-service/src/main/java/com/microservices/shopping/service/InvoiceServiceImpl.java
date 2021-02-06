@@ -4,12 +4,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.microservices.shopping.client.CardClient;
 import com.microservices.shopping.client.CustomerClient;
 import com.microservices.shopping.client.ProductClient;
 //import com.microservices.shopping.client.CustomerClient;
 //import com.microservices.shopping.client.ProductClient;
 import com.microservices.shopping.entity.Invoice;
 import com.microservices.shopping.entity.InvoiceItem;
+import com.microservices.shopping.model.Card;
 import com.microservices.shopping.model.Customer;
 import com.microservices.shopping.model.Product;
 //import com.microservices.shopping.model.Customer;
@@ -35,6 +37,9 @@ public class InvoiceServiceImpl implements InvoiceService {
 
     @Autowired
     ProductClient productClient;
+    
+    @Autowired
+    CardClient cardClient;
 
     @Override
     public List<Invoice> findInvoiceAll() {
@@ -47,13 +52,33 @@ public class InvoiceServiceImpl implements InvoiceService {
         Invoice invoiceDB = invoiceRepository.findByNumberInvoice ( invoice.getNumberInvoice () );
         if (invoiceDB !=null){
             return  invoiceDB;
-        }
+        } 
         invoice.setState("CREATED");
-        invoiceDB = invoiceRepository.save(invoice);
-        invoiceDB.getItems().forEach( invoiceItem -> {
+        List<InvoiceItem> items = invoice.getItems();
+        items.forEach( invoiceItem -> {
             productClient.updateStockProduct( invoiceItem.getProductId(), invoiceItem.getQuantity() * -1);
         });
-
+        
+        double total = 0.0;
+        for(int i = 0; i < items.size(); i++) {
+        	total = total + items.get(i).getSubTotal();
+        }
+        invoice.setTotal(total);
+        
+        if(invoice.getPayMethod() == "tarjeta") {
+        	if (invoice.getCustomer().getCards().isEmpty()) {
+        		invoice.setPayMethod("efectivo");
+        		invoice.setNumberCard("");
+        	} else {
+            	Card card = cardClient.updateBalance(invoice.getCard().getId(), -1 * total).getBody();
+            	if (card.getId() == null && card.getNumber() == "none" && card.getExpDate() == "none") {
+         	        invoice.setPayMethod("efectivo");
+         	        invoice.setNumberCard("");
+         	    } 
+        	}	
+        }
+        
+        invoiceDB = invoiceRepository.save(invoice);
         return invoiceDB;
     }
 

@@ -55,6 +55,17 @@ public class PaymentServiceImpl implements PaymentService{
 		return cardRepository.save(card);
 	}
 
+	@Override
+	public Card updateBalance(Long id, Double value) {
+		Card cardDB = this.getCard(id);
+		if (null == cardDB) {
+			return null;
+		}
+		Double balance = cardDB.getBalance() + value;
+		cardDB.setBalance(balance);
+		return this.cardRepository.save(cardDB);
+	}
+
 
 
 }

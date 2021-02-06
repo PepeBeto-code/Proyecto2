@@ -1,5 +1,7 @@
 package com.microservices.shopping.model;
 
+import java.util.List;
+
 import lombok.Builder;
 import lombok.Data;
 
@@ -14,4 +16,5 @@ public class Customer {
     private String photoUrl;
     private Region region;
     private String state;
+    private List<Card> cards;
 }
