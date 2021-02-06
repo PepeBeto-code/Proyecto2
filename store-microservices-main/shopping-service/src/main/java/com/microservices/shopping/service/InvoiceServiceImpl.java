@@ -64,6 +64,8 @@ public class InvoiceServiceImpl implements InvoiceService {
         	total = total + items.get(i).getSubTotal();
         }
         invoice.setTotal(total);
+        String cardNumber = invoice.getCard().getNumber();
+        invoice.setNumberCard(cardNumber.substring(cardNumber.length() - 4));
         
         if(invoice.getPayMethod() == "tarjeta") {
         	if (invoice.getCustomer().getCards() == null || invoice.getCustomer().getCards().isEmpty()) {
