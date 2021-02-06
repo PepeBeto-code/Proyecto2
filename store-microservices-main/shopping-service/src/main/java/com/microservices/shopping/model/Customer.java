@@ -2,11 +2,21 @@ package com.microservices.shopping.model;
 
 import java.util.List;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
-@Data
+@Getter 
+@Setter 
+@AllArgsConstructor 
+@ToString 
+@EqualsAndHashCode
 @Builder
+@NoArgsConstructor
 public class Customer {
 	private Long id;
     private String numberID;
@@ -17,4 +27,5 @@ public class Customer {
     private Region region;
     private String state;
     private List<Card> cards;
+
 }

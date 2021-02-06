@@ -73,7 +73,7 @@ public class InvoiceServiceImpl implements InvoiceService {
         		invoice.setNumberCard("");
         	} else {
             	Card card = cardClient.updateBalance(invoice.getCard().getId(), -1 * total).getBody();
-            	if (card.getId() == null && card.getNumber() == "none" && card.getExpDate() == "none") {
+            	if (card.getId() == null && card.getNumber() == "none" && card.getExp_date() == "none") {
          	        invoice.setPayMethod("efectivo");
          	        invoice.setNumberCard("");
          	    } 
@@ -117,6 +117,7 @@ public class InvoiceServiceImpl implements InvoiceService {
 
         Invoice invoice= invoiceRepository.findById(id).orElse(null);
         if (null != invoice ){
+        	System.out.println("Id del customer:" + invoice.getCustomerId());
             Customer customer = customerClient.getCustomer(invoice.getCustomerId()).getBody();
         	System.out.println("este es el costumer: "+customer);
             invoice.setCustomer(customer);

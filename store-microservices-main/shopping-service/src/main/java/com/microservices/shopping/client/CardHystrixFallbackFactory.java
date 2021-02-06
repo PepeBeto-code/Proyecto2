@@ -12,7 +12,7 @@ public class CardHystrixFallbackFactory implements CardClient {
 	public ResponseEntity<Card> getCard(Long id) {
 		Card card = Card.builder()
 				.number("none")
-				.expDate("none")
+				.exp_date("none")
 				.balance(0.0).build();
 		return ResponseEntity.ok(card);
 	}
@@ -21,7 +21,7 @@ public class CardHystrixFallbackFactory implements CardClient {
 	public ResponseEntity<Card> updateBalance(Long id, Double value) {
 		Card card = Card.builder()
 				.number("none")
-				.expDate("none")
+				.exp_date("none")
 				.balance(0.0).build();
 		return ResponseEntity.ok(card);
 	}
