@@ -66,7 +66,7 @@ public class InvoiceServiceImpl implements InvoiceService {
         invoice.setTotal(total);
         
         if(invoice.getPayMethod() == "tarjeta") {
-        	if (invoice.getCustomer().getCards().isEmpty()) {
+        	if (invoice.getCustomer().getCards() == null || invoice.getCustomer().getCards().isEmpty()) {
         		invoice.setPayMethod("efectivo");
         		invoice.setNumberCard("");
         	} else {
