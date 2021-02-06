@@ -29,7 +29,7 @@ spring:
           uri: lb://payment-service
           predicates:
             - Path=/payments/**
-     globalcors:
+      globalcors:
         corsConfigurations:
           '[/**]':
             allowedOrigins: "https://localhost:4200"
