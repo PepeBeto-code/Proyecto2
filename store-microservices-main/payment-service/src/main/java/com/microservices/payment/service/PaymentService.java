@@ -14,4 +14,5 @@ public interface PaymentService {
 	public ArrayList<Card> findByCustomer(Long idCustomer);
 	public ArrayList<Card> listAllProduct();
 	public Card getCard(Long id);
+	public Card updateBalance(Long id, Double value);
 }

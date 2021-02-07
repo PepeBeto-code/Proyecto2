@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.sym.Name;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.microservices.payment.entity.Card;
 import com.microservices.payment.service.PaymentService;
@@ -102,6 +103,16 @@ public class PaymentController {
 	        return  ResponseEntity.ok(currentCard);
 	    }
 	   
+	@PutMapping(value = "/{id}/balance")
+	public ResponseEntity<Card> updateBalance(@PathVariable Long id, @RequestParam(name = "value", required = true) Double value) {
+		Card card = this.paymentService.updateBalance(id, value);
+		if (card == null) {
+			return ResponseEntity.notFound().build();
+		}
+		return ResponseEntity.ok(card);
+		
+	}
+	
 	    @DeleteMapping(value = "/{id}")
 	    public ResponseEntity<String> deleteCard(@PathVariable("id") Long id){
 	        paymentService.deleteCard(id);

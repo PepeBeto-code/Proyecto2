@@ -1,6 +1,8 @@
 package com.microservices.shopping.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.microservices.shopping.model.Card;
 //import com.microservices.shopping.model.Customer;
 import com.microservices.shopping.model.Customer;
 
@@ -27,9 +29,10 @@ public class Invoice {
 	@Column(name = "pay_method")
 	private String payMethod;
 
-	@Column(name = "number_card")
-	private String numberCard;
-
+    
+    @Column(name = "number_card")
+    private String numberCard;
+   
 	private String description;
 
 	@Column(name = "customer_id")
@@ -41,6 +44,9 @@ public class Invoice {
 	private Date createAt;
 
 	private String state;
+	
+    @Column(name = "total")
+    private Double total;
 
 
     @Valid
@@ -49,9 +55,12 @@ public class Invoice {
     @JoinColumn(name = "invoice_id")
     private List<InvoiceItem> items;
 
-
-	@Transient
-	private Customer customer;
+    @Transient
+    private Customer customer;
+    
+    @JsonIgnore
+    @Transient
+    private Card card;
 
 	public Invoice() {
 		items = new ArrayList<>();
