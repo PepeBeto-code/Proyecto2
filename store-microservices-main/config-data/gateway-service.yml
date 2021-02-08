@@ -13,6 +13,11 @@ spring:
         corsConfigurations:
           '[/**]':
             allowedOrigins: "http://localhost:4200"
+            allowedMethods:
+            - GET
+            - POST
+            - UPDATE
+            - DELETE
       discovery:
         locator:
           enabled: true
