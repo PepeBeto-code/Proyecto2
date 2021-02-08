@@ -18,6 +18,8 @@ spring:
             - POST
             - PUT
             - DELETE
+          default-filters:
+          - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
       discovery:
         locator:
           enabled: true
