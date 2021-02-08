@@ -19,11 +19,12 @@ public class PreFlightCorsConfiguration {
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        CorsConfiguration config = new CorsConfiguration().applyPermitDefaultValues();
-        config.addAllowedMethod(HttpMethod.PUT);
+        CorsConfiguration config = new CorsConfiguration();
         config.addAllowedMethod(HttpMethod.DELETE);
         config.addAllowedMethod(HttpMethod.PUT);
+        config.addAllowedMethod(HttpMethod.GET);
         config.addAllowedMethod(HttpMethod.POST);
+        config.addAllowedOrigin("http://localhost:4200");
         source.registerCorsConfiguration("/**", config);
         return source;
     }

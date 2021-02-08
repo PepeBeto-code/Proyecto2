@@ -26,7 +26,6 @@ public class InvoiceItem  {
     @Column(name = "product_id")
     private Long productId;
 
-
     @Transient
     private Double subTotal;
 
@@ -40,6 +39,7 @@ public class InvoiceItem  {
             return (double) 0;
         }
     }
+    
     public InvoiceItem(){
         this.quantity=(double) 0;
         this.price=(double) 0;

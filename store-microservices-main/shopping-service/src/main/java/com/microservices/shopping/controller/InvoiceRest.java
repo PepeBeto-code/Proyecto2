@@ -29,12 +29,23 @@ public class InvoiceRest {
 
     // -------------------Retrieve All Invoices--------------------------------------------
     @GetMapping
-    public ResponseEntity<List<Invoice>> listAllInvoices() {
+    public ResponseEntity<List<Invoice>> listAllInvoices(@RequestParam(name = "state", required = false) String state) {
         List<Invoice> invoices = invoiceService.findInvoiceAll();
-        if (invoices.isEmpty()) {
-            return  ResponseEntity.noContent().build();
+        if(null == state) {
+        	invoices = invoiceService.findInvoiceAll();
         }
+        else {
+        	invoices = invoiceService.findByState(state);
+        }
+        
         return  ResponseEntity.ok(invoices);
+    }
+    
+    @GetMapping(value = "/mostRecentId")
+    public ResponseEntity<Long> getMostRecentId() {
+    	Long maxId = this.invoiceService.mostRecentId();
+    	System.out.println(maxId);
+    	return ResponseEntity.ok(maxId);
     }
 
     // -------------------Retrieve Single Invoice------------------------------------------
@@ -54,9 +65,10 @@ public class InvoiceRest {
     public ResponseEntity<Invoice> createInvoice(@Valid @RequestBody Invoice invoice, BindingResult result) {
         log.info("Creating Invoice : {}", invoice);
         if (result.hasErrors()){
+        	System.out.println(this.formatMessage(result));
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, this.formatMessage(result));
         }
-        Invoice invoiceDB = invoiceService.createInvoice (invoice);
+        Invoice invoiceDB = invoiceService.createInvoice(invoice);
 
         return  ResponseEntity.status( HttpStatus.CREATED).body(invoiceDB);
     }

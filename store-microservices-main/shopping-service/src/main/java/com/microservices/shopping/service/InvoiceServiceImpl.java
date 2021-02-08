@@ -52,27 +52,29 @@ public class InvoiceServiceImpl implements InvoiceService {
         Invoice invoiceDB = invoiceRepository.findByNumberInvoice ( invoice.getNumberInvoice () );
         if (invoiceDB !=null){
             return  invoiceDB;
-        } 
-        invoice.setState("CREATED");
-        List<InvoiceItem> items = invoice.getItems();
-        items.forEach( invoiceItem -> {
-            productClient.updateStockProduct( invoiceItem.getProductId(), invoiceItem.getQuantity() * -1);
-        });
-        
+        }
         double total = 0.0;
+        List<InvoiceItem> items = invoice.getItems();
         for(int i = 0; i < items.size(); i++) {
         	total = total + items.get(i).getSubTotal();
         }
         invoice.setTotal(total);
         String cardNumber = invoice.getCard().getNumber();
         invoice.setNumberCard(cardNumber.substring(cardNumber.length() - 4));
+        invoice.setState("CREATED");
+        items.forEach( invoiceItem -> {
+            productClient.updateStockProduct( invoiceItem.getProductId(), invoiceItem.getQuantity() * -1);
+        });
         
-        if(invoice.getPayMethod() == "tarjeta") {
-        	if (invoice.getCustomer().getCards() == null || invoice.getCustomer().getCards().isEmpty()) {
+        if(invoice.getPayMethod().equals("tarjeta")) {
+        	List<Card> cards = invoice.getCustomer().getCards();
+        	System.out.println("\nTarjetas: " + cards);
+        	if (cards == null || cards.isEmpty()) {
         		invoice.setPayMethod("efectivo");
         		invoice.setNumberCard("");
         	} else {
-            	Card card = cardClient.updateBalance(invoice.getCard().getId(), -1 * total).getBody();
+            	Card card = cardClient.updateBalance(invoice.getCard().getId(), -1.0 * total).getBody();
+            	System.out.println("Llegué aquí: " + card);
             	if (card.getId() == null && card.getNumber() == "none" && card.getExp_date() == "none") {
          	        invoice.setPayMethod("efectivo");
          	        invoice.setNumberCard("");
@@ -130,4 +132,16 @@ public class InvoiceServiceImpl implements InvoiceService {
         }
         return invoice ;
     }
+
+
+	@Override
+	public List<Invoice> findByState(String state) {
+		return invoiceRepository.findByState(state);
+	}
+
+
+	@Override
+	public Long mostRecentId() {
+		return this.invoiceRepository.maxId();
+	}
 }

@@ -25,6 +25,7 @@ public class Card implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
+	@JsonProperty(value = "num")
 	@Column(name = "number")
 	private String number;
 

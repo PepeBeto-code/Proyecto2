@@ -56,7 +56,6 @@ public class Invoice {
     @Transient
     private Customer customer;
     
-    @JsonIgnore
     @Transient
     private Card card;
 
