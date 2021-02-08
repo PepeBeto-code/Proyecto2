@@ -16,7 +16,7 @@ spring:
             allowedMethods:
             - GET
             - POST
-            - UPDATE
+            - PUT
             - DELETE
       discovery:
         locator:
