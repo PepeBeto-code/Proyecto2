@@ -14,6 +14,7 @@ import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.Data;
 
@@ -26,7 +27,7 @@ public class Card implements Serializable {
 	
 	@Column(name = "number")
 	private String number;
-	
+
 	@Column(name = "exp_date")
 	private String exp_date;
 	

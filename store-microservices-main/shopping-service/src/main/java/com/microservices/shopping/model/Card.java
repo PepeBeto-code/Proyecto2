@@ -1,6 +1,8 @@
 package com.microservices.shopping.model;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -18,6 +20,7 @@ import lombok.ToString;
 @NoArgsConstructor
 public class Card {
 	private Long id;
+	@JsonProperty(value = "num")
 	private String number;
 	private String exp_date;
 	private String cvv;
