@@ -36,8 +36,22 @@ Feign:
       default:
         connectTimeout: 90000000
         readTimeout: 90000000
+        
+ribbon:
+  ReadTimeout: 90000
+  ConnectTimeout: 90000 
+  OkToRetryOnAllOperations: true
+  MaxAutoRetries: 3
+  MaxAutoRetriesNextServer: 3
+  clientName:
+   ribbon:
+     MaxAutoRetries: 5
+     MaxAutoRetriesNextServer: 3
+     OkToRetryOnAllOperations: true
+     ReadTimeout: 90000
+     ConnectTimeout: 90000 
 
-    
+       
 management:
   endpoints:
     web:
