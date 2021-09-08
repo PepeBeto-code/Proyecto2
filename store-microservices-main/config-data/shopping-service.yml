@@ -30,6 +30,7 @@ eureka:
 
 Feign:
   hystrix:
+   enabled: true
    threadpool.default.coreSize: 20
    threadpool.default.maxQueueSize: 500000
    threadpool.default.keepAliveTimeMinutes: 2
