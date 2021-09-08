@@ -42,7 +42,7 @@ Feign:
        enabled: false
       isolation:
        strategy: THREAD
-        thread:
+       thread:
         timeoutInMilliseconds: 30000
   client:
     config:
