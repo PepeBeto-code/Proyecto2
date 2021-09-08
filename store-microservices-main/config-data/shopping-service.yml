@@ -30,7 +30,7 @@ eureka:
 
 Feign:
   hystrix:
-   enable: true
+   enabled: true
   client:
     config:
       default:
